@@ -1,8 +1,9 @@
-library (BiDAG,
-         lib = '/mnt/lfs2/mart9986/Rpackages')
+library (BiDAG)
 
 # load the data
-load('/mnt/lfs2/mart9986/data/data_ge_N_100.RData')
+load('data_ge_N_100.RData')
+
+# Adjacency matrices -----------------------------------------------------------
 
 # Undirected adjacency matrix with the true edges for topology G2.
 am_g2 <- matrix(c(0, 1, 1, 0,
@@ -39,7 +40,8 @@ am_pc <- matrix(c(0, 1, 0, 0, 0, 1, 0, 1,
                 byrow = TRUE,
                 nrow = 8)
 
-# Initiate lists for the output of each method to full length.
+# Initialize output lists to full length. --------------------------------------
+
 ord_g2_100_02_fc <- vector(mode = 'list',
                            length = M)
 
@@ -112,7 +114,8 @@ ord_pc_100_1 <- vector(mode = 'list',
 par_pc_100_1 <- vector(mode = 'list',
                        length = M)
 
-# Initialize the lists for the probability matrix to full length.
+# Initialize probability matrix lists to full length. --------------------------
+
 ord_g2_100_02_fc_pm <- vector(mode = 'list',
                               length = M)
 
@@ -185,7 +188,8 @@ ord_pc_100_1_pm <- vector(mode = 'list',
 par_pc_100_1_pm <- vector(mode = 'list',
                           length = M)
 
-# Initialize the time lists to full length.
+# Initialize time lists to full length. ----------------------------------------
+
 ord_g2_100_02_fc_time <- vector(mode = 'list',
                                 length = M)
 
@@ -258,18 +262,15 @@ ord_pc_100_1_time <- vector(mode = 'list',
 par_pc_100_1_time <- vector(mode = 'list',
                             length = M)
 
-set.seed(200)
+# Run order and partition MCMC on each data set. -------------------------------
+
+set.seed(144)
 
 # Loop through each combination of signal strength and sample size for all
 # topologies.
 for (e in 1:M) {
-
-  #################################################
-  # ORDER AND PARTITION
-  # G2 FULLY CONNECTED, TRUE EDGES
-  # 100
-  # 0.2
-  #################################################
+  
+  # ss = 0.2 --------------------------------------
 
   score_g2_100_02 <- scoreparameters(4,
                                      "bge",
@@ -316,14 +317,60 @@ for (e in 1:M) {
   par_g2_100_02_time[[e]] <- endtime - starttime
   par_g2_100_02_pm[[e]] <- edges.posterior(par_g2_100_02[[e]]$c$i,
                                            burnin = 0.2)
+  
+  score_nc11_100_02 <- scoreparameters(11,
+                                       "bge",
+                                       data_nc11_100_02[[e]])
+  
+  starttime <- Sys.time()
+  ord_nc11_100_02[[e]] <- orderMCMC(iterations = 30000,
+                                    n = 11,
+                                    scoreparam = score_nc11_100_02,
+                                    startspace = am_nc11,
+                                    chainout = TRUE)
+  endtime <- Sys.time()
+  ord_nc11_100_02_time[[e]] <- endtime - starttime
+  ord_nc11_100_02_pm[[e]] <- edges.posterior(ord_nc11_100_02[[e]]$c$i,
+                                             burnin = 0.2)
+  
+  starttime <- Sys.time()
+  par_nc11_100_02[[e]] <- partitionMCMC(iterations = 30000,
+                                        n = 11,
+                                        scoreparam = score_nc11_100_02,
+                                        startspace = am_nc11,
+                                        verbose = FALSE)
+  endtime <- Sys.time()
+  par_nc11_100_02_time[[e]] <- endtime - starttime
+  par_nc11_100_02_pm[[e]] <- edges.posterior(par_nc11_100_02[[e]]$c$i,
+                                             burnin = 0.2)
+  
+  score_pc_100_02 <- scoreparameters(8,
+                                     "bge",
+                                     data_pc_100_02[[e]])
+  
+  starttime <- Sys.time()
+  ord_pc_100_02[[e]] <- orderMCMC(iterations = 30000,
+                                  n = 8,
+                                  scoreparam = score_pc_100_02,
+                                  startspace = am_pc,
+                                  chainout = TRUE)
+  endtime <- Sys.time()
+  ord_pc_100_02_time[[e]] <- endtime - starttime
+  ord_pc_100_02_pm[[e]] <- edges.posterior(ord_pc_100_02[[e]]$c$i,
+                                           burnin = 0.2)
+  
+  starttime <- Sys.time()
+  par_pc_100_02[[e]] <- partitionMCMC(iterations = 30000,
+                                      n = 8,
+                                      scoreparam = score_pc_100_02,
+                                      startspace = am_pc,
+                                      verbose = FALSE)
+  endtime <- Sys.time()
+  par_pc_100_02_time[[e]] <- endtime - starttime
+  par_pc_100_02_pm[[e]] <- edges.posterior(par_pc_100_02[[e]]$c$i,
+                                           burnin = 0.2)
 
-
-  #################################################
-  # ORDER AND PARTITION
-  # G2 FULLY CONNECTED, TRUE EDGES
-  # 100
-  # 0.5
-  #################################################
+  # ss = 0.5 --------------------------------------
 
   score_g2_100_05 <- scoreparameters(4,
                                      "bge",
@@ -370,13 +417,60 @@ for (e in 1:M) {
   par_g2_100_05_time[[e]] <- endtime - starttime
   par_g2_100_05_pm[[e]] <- edges.posterior(par_g2_100_05[[e]]$c$i,
                                            burnin = 0.2)
+  
+  score_nc11_100_05 <- scoreparameters(11,
+                                       "bge",
+                                       data_nc11_100_05[[e]])
+  
+  starttime <- Sys.time()
+  ord_nc11_100_05[[e]] <- orderMCMC(iterations = 30000,
+                                    n = 11,
+                                    scoreparam = score_nc11_100_05,
+                                    startspace = am_nc11,
+                                    chainout = TRUE)
+  endtime <- Sys.time()
+  ord_nc11_100_05_time[[e]] <- endtime - starttime
+  ord_nc11_100_05_pm[[e]] <- edges.posterior(ord_nc11_100_05[[e]]$c$i,
+                                             burnin = 0.2)
+  
+  starttime <- Sys.time()
+  par_nc11_100_05[[e]] <- partitionMCMC(iterations = 30000,
+                                        n = 11,
+                                        scoreparam = score_nc11_100_05,
+                                        startspace = am_nc11,
+                                        verbose = FALSE)
+  endtime <- Sys.time()
+  par_nc11_100_05_time[[e]] <- endtime - starttime
+  par_nc11_100_05_pm[[e]] <- edges.posterior(par_nc11_100_05[[e]]$c$i,
+                                             burnin = 0.2)
+  
+  score_pc_100_05 <- scoreparameters(8,
+                                     "bge",
+                                     data_pc_100_05[[e]])
+  
+  starttime <- Sys.time()
+  ord_pc_100_05[[e]] <- orderMCMC(iterations = 30000,
+                                  n = 8,
+                                  scoreparam = score_pc_100_05,
+                                  startspace = am_pc,
+                                  chainout = TRUE)
+  endtime <- Sys.time()
+  ord_pc_100_05_time[[e]] <- endtime - starttime
+  ord_pc_100_05_pm[[e]] <- edges.posterior(ord_pc_100_05[[e]]$c$i,
+                                           burnin = 0.2)
+  
+  starttime <- Sys.time()
+  par_pc_100_05[[e]] <- partitionMCMC(iterations = 30000,
+                                      n = 8,
+                                      scoreparam = score_pc_100_05,
+                                      startspace = am_pc,
+                                      verbose = FALSE)
+  endtime <- Sys.time()
+  par_pc_100_05_time[[e]] <- endtime - starttime
+  par_pc_100_05_pm[[e]] <- edges.posterior(par_pc_100_05[[e]]$c$i,
+                                           burnin = 0.2)
 
-  #################################################
-  # ORDER AND PARTITION
-  # G2 FULLY CONNECTED, TRUE EDGES
-  # 100
-  # 1
-  #################################################
+  # ss = 1 ----------------------------------------
 
   score_g2_100_1 <- scoreparameters(4,
                                     "bge",
@@ -423,84 +517,11 @@ for (e in 1:M) {
   par_g2_100_1_time[[e]] <- endtime - starttime
   par_g2_100_1_pm[[e]] <- edges.posterior(par_g2_100_1[[e]]$c$i,
                                           burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # NC11
-  # 100
-  # 0.2
-  #################################################
-
-  score_nc11_100_02 <- scoreparameters(11,
-                                       "bge",
-                                       data_nc11_100_02[[e]])
-
-  starttime <- Sys.time()
-  ord_nc11_100_02[[e]] <- orderMCMC(iterations = 30000,
-                                    n = 11,
-                                    scoreparam = score_nc11_100_02,
-                                    startspace = am_nc11,
-                                    chainout = TRUE)
-  endtime <- Sys.time()
-  ord_nc11_100_02_time[[e]] <- endtime - starttime
-  ord_nc11_100_02_pm[[e]] <- edges.posterior(ord_nc11_100_02[[e]]$c$i,
-                                             burnin = 0.2)
-
-  starttime <- Sys.time()
-  par_nc11_100_02[[e]] <- partitionMCMC(iterations = 30000,
-                                        n = 11,
-                                        scoreparam = score_nc11_100_02,
-                                        startspace = am_nc11,
-                                        verbose = FALSE)
-  endtime <- Sys.time()
-  par_nc11_100_02_time[[e]] <- endtime - starttime
-  par_nc11_100_02_pm[[e]] <- edges.posterior(par_nc11_100_02[[e]]$c$i,
-                                             burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # NC11
-  # 100
-  # 0.5
-  #################################################
-
-  score_nc11_100_05 <- scoreparameters(11,
-                                       "bge",
-                                       data_nc11_100_05[[e]])
-
-  starttime <- Sys.time()
-  ord_nc11_100_05[[e]] <- orderMCMC(iterations = 30000,
-                                    n = 11,
-                                    scoreparam = score_nc11_100_05,
-                                    startspace = am_nc11,
-                                    chainout = TRUE)
-  endtime <- Sys.time()
-  ord_nc11_100_05_time[[e]] <- endtime - starttime
-  ord_nc11_100_05_pm[[e]] <- edges.posterior(ord_nc11_100_05[[e]]$c$i,
-                                             burnin = 0.2)
-
-  starttime <- Sys.time()
-  par_nc11_100_05[[e]] <- partitionMCMC(iterations = 30000,
-                                        n = 11,
-                                        scoreparam = score_nc11_100_05,
-                                        startspace = am_nc11,
-                                        verbose = FALSE)
-  endtime <- Sys.time()
-  par_nc11_100_05_time[[e]] <- endtime - starttime
-  par_nc11_100_05_pm[[e]] <- edges.posterior(par_nc11_100_05[[e]]$c$i,
-                                             burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # NC11
-  # 100
-  # 1
-  #################################################
-
+  
   score_nc11_100_1 <- scoreparameters(11,
                                       "bge",
                                       data_nc11_100_1[[e]])
-
+  
   starttime <- Sys.time()
   ord_nc11_100_1[[e]] <- orderMCMC(iterations = 30000,
                                    n = 11,
@@ -510,8 +531,8 @@ for (e in 1:M) {
   endtime <- Sys.time()
   ord_nc11_100_1_time[[e]] <- endtime - starttime
   ord_nc11_100_1_pm[[e]] <- edges.posterior(ord_nc11_100_1[[e]]$c$i,
-                                             burnin = 0.2)
-
+                                            burnin = 0.2)
+  
   starttime <- Sys.time()
   par_nc11_100_1[[e]] <- partitionMCMC(iterations = 30000,
                                        n = 11,
@@ -521,85 +542,12 @@ for (e in 1:M) {
   endtime <- Sys.time()
   par_nc11_100_1_time[[e]] <- endtime - starttime
   par_nc11_100_1_pm[[e]] <- edges.posterior(par_nc11_100_1[[e]]$c$i,
-                                             burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # PC
-  # 100
-  # 0.2
-  #################################################
-
-  score_pc_100_02 <- scoreparameters(8,
-                                     "bge",
-                                     data_pc_100_02[[e]])
-
-  starttime <- Sys.time()
-  ord_pc_100_02[[e]] <- orderMCMC(iterations = 30000,
-                                  n = 8,
-                                  scoreparam = score_pc_100_02,
-                                  startspace = am_pc,
-                                  chainout = TRUE)
-  endtime <- Sys.time()
-  ord_pc_100_02_time[[e]] <- endtime - starttime
-  ord_pc_100_02_pm[[e]] <- edges.posterior(ord_pc_100_02[[e]]$c$i,
-                                           burnin = 0.2)
-
-  starttime <- Sys.time()
-  par_pc_100_02[[e]] <- partitionMCMC(iterations = 30000,
-                                      n = 8,
-                                      scoreparam = score_pc_100_02,
-                                      startspace = am_pc,
-                                      verbose = FALSE)
-  endtime <- Sys.time()
-  par_pc_100_02_time[[e]] <- endtime - starttime
-  par_pc_100_02_pm[[e]] <- edges.posterior(par_pc_100_02[[e]]$c$i,
-                                           burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # PC
-  # 100
-  # 0.5
-  #################################################
-
-  score_pc_100_05 <- scoreparameters(8,
-                                     "bge",
-                                     data_pc_100_05[[e]])
-
-  starttime <- Sys.time()
-  ord_pc_100_05[[e]] <- orderMCMC(iterations = 30000,
-                                  n = 8,
-                                  scoreparam = score_pc_100_05,
-                                  startspace = am_pc,
-                                  chainout = TRUE)
-  endtime <- Sys.time()
-  ord_pc_100_05_time[[e]] <- endtime - starttime
-  ord_pc_100_05_pm[[e]] <- edges.posterior(ord_pc_100_05[[e]]$c$i,
-                                           burnin = 0.2)
-
-  starttime <- Sys.time()
-  par_pc_100_05[[e]] <- partitionMCMC(iterations = 30000,
-                                      n = 8,
-                                      scoreparam = score_pc_100_05,
-                                      startspace = am_pc,
-                                      verbose = FALSE)
-  endtime <- Sys.time()
-  par_pc_100_05_time[[e]] <- endtime - starttime
-  par_pc_100_05_pm[[e]] <- edges.posterior(par_pc_100_05[[e]]$c$i,
-                                           burnin = 0.2)
-
-  #################################################
-  # ORDER AND PARTITION
-  # PC
-  # 100
-  # 1
-  #################################################
-
+                                            burnin = 0.2)
+  
   score_pc_100_1 <- scoreparameters(8,
                                     "bge",
                                     data_pc_100_1[[e]])
-
+  
   starttime <- Sys.time()
   ord_pc_100_1[[e]] <- orderMCMC(iterations = 30000,
                                  n = 8,
@@ -609,8 +557,8 @@ for (e in 1:M) {
   endtime <- Sys.time()
   ord_pc_100_1_time[[e]] <- endtime - starttime
   ord_pc_100_1_pm[[e]] <- edges.posterior(ord_pc_100_1[[e]]$c$i,
-                                           burnin = 0.2)
-
+                                          burnin = 0.2)
+  
   starttime <- Sys.time()
   par_pc_100_1[[e]] <- partitionMCMC(iterations = 30000,
                                      n = 8,
@@ -620,11 +568,13 @@ for (e in 1:M) {
   endtime <- Sys.time()
   par_pc_100_1_time[[e]] <- endtime - starttime
   par_pc_100_1_pm[[e]] <- edges.posterior(par_pc_100_1[[e]]$c$i,
-                                           burnin = 0.2)
+                                          burnin = 0.2)
 
   print(e)
   print(Sys.time())
 
+  # Save the output, probability matrices, and time separately. ----------------
+  
   save(M,
        ord_g2_100_02_fc,
        ord_g2_100_02,
@@ -638,7 +588,7 @@ for (e in 1:M) {
        ord_pc_100_02,
        ord_pc_100_05,
        ord_pc_100_1,
-       file = '/mnt/lfs2/mart9986/bidag/ord_ge_N_100.RData')
+       file = 'ord_ge_N_100.RData')
 
   save(M,
        par_g2_100_02_fc,
@@ -653,7 +603,7 @@ for (e in 1:M) {
        par_pc_100_02,
        par_pc_100_05,
        par_pc_100_1,
-       file = '/mnt/lfs2/mart9986/bidag/par_ge_N_100.RData')
+       file = 'par_ge_N_100.RData')
 
   save(M,
        ord_g2_100_02_fc_pm,
@@ -668,7 +618,7 @@ for (e in 1:M) {
        ord_pc_100_02_pm,
        ord_pc_100_05_pm,
        ord_pc_100_1_pm,
-       file = '/mnt/lfs2/mart9986/bidag/ord_ge_N_100_pm.RData')
+       file = 'ord_ge_N_100_pm.RData')
 
   save(M,
        par_g2_100_02_fc_pm,
@@ -683,7 +633,7 @@ for (e in 1:M) {
        par_pc_100_02_pm,
        par_pc_100_05_pm,
        par_pc_100_1_pm,
-       file = '/mnt/lfs2/mart9986/bidag/par_ge_N_100_pm.RData')
+       file = 'par_ge_N_100_pm.RData')
 
   save(M,
        ord_g2_100_02_fc_time,
@@ -698,7 +648,7 @@ for (e in 1:M) {
        ord_pc_100_02_time,
        ord_pc_100_05_time,
        ord_pc_100_1_time,
-       file = '/mnt/lfs2/mart9986/bidag/ord_ge_N_100_time.RData')
+       file = 'ord_ge_N_100_time.RData')
 
   save(M,
        par_g2_100_02_fc_time,
@@ -713,6 +663,6 @@ for (e in 1:M) {
        par_pc_100_02_time,
        par_pc_100_05_time,
        par_pc_100_1_time,
-       file = '/mnt/lfs2/mart9986/bidag/par_ge_N_100_time.RData')
+       file = 'par_ge_N_100_time.RData')
 
 }
