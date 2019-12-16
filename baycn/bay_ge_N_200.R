@@ -166,9 +166,9 @@ set.seed(222)
 # Loop through each combination of signal strength and sample size for all
 # topologies.
 for (e in 1:M) {
-  
+
   # 0.2 -------------------------------------------
-  
+
   bay_g2_200_02[[e]] <- mhEdge(adjMatrix = am_g2,
                                burnIn = 0.2,
                                data = data_g2_200_02[[e]],
@@ -180,7 +180,7 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
   bay_g2_200_02_fc[[e]] <- mhEdge(adjMatrix = am_g2_fc,
                                   burnIn = 0.2,
                                   data = data_g2_200_02[[e]],
@@ -192,7 +192,7 @@ for (e in 1:M) {
                                             0.9),
                                   thinTo = 200,
                                   progress = FALSE)
-  
+
   bay_h2_200_02[[e]] <- mhEdge(adjMatrix = am_h2,
                                burnIn = 0.2,
                                data = data_h2_200_02[[e]],
@@ -204,7 +204,7 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
   bay_m1_200_02[[e]] <- mhEdge(adjMatrix = am_m1,
                                burnIn = 0.2,
                                data = data_m1_200_02[[e]],
@@ -216,7 +216,7 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
   bay_m2_200_02[[e]] <- mhEdge(adjMatrix = am_m2,
                                burnIn = 0.2,
                                data = data_m2_200_02[[e]],
@@ -228,7 +228,7 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
   bay_mp_200_02[[e]] <- mhEdge(adjMatrix = am_mp,
                                burnIn = 0.2,
                                data = data_mp_200_02[[e]],
@@ -240,7 +240,7 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
   bay_nc11_200_02[[e]] <- mhEdge(adjMatrix = am_nc11,
                                  burnIn = 0.2,
                                  data = data_nc11_200_02[[e]],
@@ -252,7 +252,7 @@ for (e in 1:M) {
                                            0.9),
                                  thinTo = 200,
                                  progress = FALSE)
-  
+
   bay_pc_200_02[[e]] <- mhEdge(adjMatrix = am_pc,
                                burnIn = 0.2,
                                data = data_pc_200_02[[e]],
@@ -264,10 +264,206 @@ for (e in 1:M) {
                                          0.9),
                                thinTo = 200,
                                progress = FALSE)
-  
+
+  # 0.5 -------------------------------------------
+
+  bay_g2_200_05[[e]] <- mhEdge(adjMatrix = am_g2,
+                               burnIn = 0.2,
+                               data = data_g2_200_05[[e]],
+                               iterations = 30000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  bay_g2_200_05_fc[[e]] <- mhEdge(adjMatrix = am_g2_fc,
+                                  burnIn = 0.2,
+                                  data = data_g2_200_05[[e]],
+                                  iterations = 30000,
+                                  nGV = 0,
+                                  pmr = FALSE,
+                                  prior = c(0.05,
+                                            0.05,
+                                            0.9),
+                                  thinTo = 200,
+                                  progress = FALSE)
+
+  bay_h2_200_05[[e]] <- mhEdge(adjMatrix = am_h2,
+                               burnIn = 0.2,
+                               data = data_h2_200_05[[e]],
+                               iterations = 30000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  bay_m1_200_05[[e]] <- mhEdge(adjMatrix = am_m1,
+                               burnIn = 0.2,
+                               data = data_m1_200_05[[e]],
+                               iterations = 30000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  bay_m2_200_05[[e]] <- mhEdge(adjMatrix = am_m2,
+                               burnIn = 0.2,
+                               data = data_m2_200_05[[e]],
+                               iterations = 30000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  bay_mp_200_05[[e]] <- mhEdge(adjMatrix = am_mp,
+                               burnIn = 0.2,
+                               data = data_mp_200_05[[e]],
+                               iterations = 30000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  bay_nc11_200_05[[e]] <- mhEdge(adjMatrix = am_nc11,
+                                 burnIn = 0.2,
+                                 data = data_nc11_200_05[[e]],
+                                 iterations = 50000,
+                                 nGV = 0,
+                                 pmr = FALSE,
+                                 prior = c(0.05,
+                                           0.05,
+                                           0.9),
+                                 thinTo = 200,
+                                 progress = FALSE)
+
+  bay_pc_200_05[[e]] <- mhEdge(adjMatrix = am_pc,
+                               burnIn = 0.2,
+                               data = data_pc_200_05[[e]],
+                               iterations = 50000,
+                               nGV = 0,
+                               pmr = FALSE,
+                               prior = c(0.05,
+                                         0.05,
+                                         0.9),
+                               thinTo = 200,
+                               progress = FALSE)
+
+  # 1 ---------------------------------------------
+
+  bay_g2_200_1[[e]] <- mhEdge(adjMatrix = am_g2,
+                              burnIn = 0.2,
+                              data = data_g2_200_1[[e]],
+                              iterations = 30000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
+  bay_g2_200_1_fc[[e]] <- mhEdge(adjMatrix = am_g2_fc,
+                                 burnIn = 0.2,
+                                 data = data_g2_200_1[[e]],
+                                 iterations = 30000,
+                                 nGV = 0,
+                                 pmr = FALSE,
+                                 prior = c(0.05,
+                                           0.05,
+                                           0.9),
+                                 thinTo = 200,
+                                 progress = FALSE)
+
+  bay_h2_200_1[[e]] <- mhEdge(adjMatrix = am_h2,
+                              burnIn = 0.2,
+                              data = data_h2_200_1[[e]],
+                              iterations = 30000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
+  bay_m1_200_1[[e]] <- mhEdge(adjMatrix = am_m1,
+                              burnIn = 0.2,
+                              data = data_m1_200_1[[e]],
+                              iterations = 30000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
+  bay_m2_200_1[[e]] <- mhEdge(adjMatrix = am_m2,
+                              burnIn = 0.2,
+                              data = data_m2_200_1[[e]],
+                              iterations = 30000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
+  bay_mp_200_1[[e]] <- mhEdge(adjMatrix = am_mp,
+                              burnIn = 0.2,
+                              data = data_mp_200_1[[e]],
+                              iterations = 30000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
+  bay_nc11_200_1[[e]] <- mhEdge(adjMatrix = am_nc11,
+                                burnIn = 0.2,
+                                data = data_nc11_200_1[[e]],
+                                iterations = 50000,
+                                nGV = 0,
+                                pmr = FALSE,
+                                prior = c(0.05,
+                                          0.05,
+                                          0.9),
+                                thinTo = 200,
+                                progress = FALSE)
+
+  bay_pc_200_1[[e]] <- mhEdge(adjMatrix = am_pc,
+                              burnIn = 0.2,
+                              data = data_pc_200_1[[e]],
+                              iterations = 50000,
+                              nGV = 0,
+                              pmr = FALSE,
+                              prior = c(0.05,
+                                        0.05,
+                                        0.9),
+                              thinTo = 200,
+                              progress = FALSE)
+
   print(e)
   print(Sys.time())
-  
+
   save(M,
        bay_g2_200_02,
        bay_g2_200_02_fc,
@@ -294,5 +490,5 @@ for (e in 1:M) {
        bay_nc11_200_1,
        bay_pc_200_1,
        file = 'bay_ge_N_200.RData')
-  
+
 }
